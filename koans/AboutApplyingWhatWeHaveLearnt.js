@@ -78,21 +78,30 @@ describe("About Applying What We Have Learnt", function() {
 
   /*********************************************************************************/
    it("should count the ingredient occurrence (imperative)", function () {
-    var ingredientCount = { "{ingredient name}": 0 };
+    var ingredientCount = {};
 
     for (i = 0; i < products.length; i+=1) {
         for (j = 0; j < products[i].ingredients.length; j+=1) {
             ingredientCount[products[i].ingredients[j]] = (ingredientCount[products[i].ingredients[j]] || 0) + 1;
         }
     }
-
-    expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
+    expect(ingredientCount['mushrooms']).toBe(2);
   });
 
   it("should count the ingredient occurrence (functional)", function () {
-    var ingredientCount = { "{ingredient name}": 0 };
+    var ingredientCount = { "{ingredient name}": 0 }
+    /* chain() together map(), flatten() and reduce() 
+    var ingredientCount2 = products.chain()
+            .map(products, getIngredients)
+            .flatten()
+            .reduce(ingredientBuilder, {})
+            .value();*/
 
-    /* chain() together map(), flatten() and reduce() */
+    var getIngredients = function(product) {return product.ingredients};
+    var ingredientsArrays = _.map(products, getIngredients);
+    var ingredients = _.flatten(ingredientsArrays);
+    var ingredientBuilder = function(counter, next) {counter[next] = (counter[next] || 0) + 1; return counter;};
+    var ingredientCount = _.reduce(ingredients, ingredientBuilder, {});
 
     expect(ingredientCount['mushrooms']).toBe(FILL_ME_IN);
   });

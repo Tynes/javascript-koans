@@ -119,7 +119,26 @@ describe("About Applying What We Have Learnt", function() {
   });
 
   it("should find the largest palindrome made from the product of two 3 digit numbers", function () {
-    expect(undefined).toBe(1);
+      //returns 698896, the product of 835 and 836
+      var palindromeFinder = function() {
+      var changeI = true;
+      var i = 999;
+      var j = 999;
+      var isPalindrome = false;
+      while(!isPalindrome) {
+        var number = (i * j).toString();
+        isPalindrome = number === number.split('').reverse().join('');
+        if(changeI) {
+          i--;
+          changeI = false;
+        } else {
+          j--;
+          changeI = true;
+        }
+      }
+      console.log(i, j);
+      return number;
+    }
   });
 
   it("should find the smallest number divisible by each of the numbers 1 to 20", function () {
